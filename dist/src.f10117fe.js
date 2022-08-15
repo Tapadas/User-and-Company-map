@@ -22769,6 +22769,10 @@ function () {
     };
   }
 
+  User.prototype.markerContent = function () {
+    return "User name is: ".concat(this.name);
+  };
+
   return User;
 }();
 
@@ -22795,12 +22799,16 @@ function () {
     };
   }
 
+  Company.prototype.markerContent = function () {
+    return "\n    <div>\n      <h1>Company name is: ".concat(this.companyName, "</h1>\n      <h3>Company catch phrase is: ").concat(this.catchPhrase, "</h3>\n    </div>\n    ");
+  };
+
   return Company;
 }();
 
 exports.Company = Company;
 },{"@faker-js/faker":"../../../node_modules/@faker-js/faker/dist/esm/index.mjs"}],"src/CustomMap.ts":[function(require,module,exports) {
-"use strict";
+"use strict"; /// <reference types="@types/google.maps" />
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -22821,9 +22829,17 @@ function () {
   }
 
   CustomMap.prototype.addMarket = function (mappable) {
-    new google.maps.Marker({
+    var _this = this;
+
+    var marker = new google.maps.Marker({
       map: this.googleMap,
       position: mappable.location
+    });
+    marker.addListener('click', function () {
+      var infoWindow = new google.maps.InfoWindow({
+        content: mappable.markerContent()
+      });
+      infoWindow.open(_this.googleMap, marker);
     });
   };
 
@@ -22877,7 +22893,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65451" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59866" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
